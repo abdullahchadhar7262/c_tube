@@ -5,8 +5,8 @@ import { fileURLToPath } from 'url';
 // Return "https" URLs by setting secure: true
   cloudinary.config({
     cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
-    api_key:COUDNARY_API_KEY,
-    api_secret:"COUDNARY_API_SECRET"
+    api_key:process.env.CLOUDNARY_API_KEY,
+    api_secret:process.env.CLOUDNARY_API_SECRET
   })
 
 const uploadOnCloudnary   = async(LocalFilePath)=>{
@@ -21,3 +21,5 @@ const uploadOnCloudnary   = async(LocalFilePath)=>{
   }
         
 }
+
+export default uploadOnCloudnary
