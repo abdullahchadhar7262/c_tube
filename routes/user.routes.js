@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {registerUser,loginUser,logoutUser, refreshAccessToken} from "../controllers/user.controller.js"
+import {registerUser,loginUser,logoutUser, refreshAccessToken,changeCurrentPassword,updateUserAvatar,updateAccountDetail,updateUsercoverImage} from "../controllers/user.controller.js"
 import upload from "../middlewares/mluter.middleware.js";
 import { verifyJwt } from "../middlewares/auth.middleware.js";
 
@@ -14,6 +14,11 @@ router.post('/register', uploadMiddleware, registerUser )
 router.post('/logout', verifyJwt,logoutUser)
 
 router.post("/refreshToken",refreshAccessToken)
+
+router.post("/reset_password",verifyJwt,changeCurrentPassword)
+router.post("/updateAccountDetail",verifyJwt,updateAccountDetail)
+router.post("/updateuserAvatar",verifyJwt,upload.single('avatar'),updateUserAvatar)
+router.post("/updateuserCoverImage",verifyJwt,upload.single('coverImage'),updateUsercoverImage)
 
 // router.route("/register").post(
 

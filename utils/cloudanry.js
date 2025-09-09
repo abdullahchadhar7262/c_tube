@@ -5,6 +5,10 @@ import { fileURLToPath } from 'url';
 // Return "https" URLs by setting secure: true
   cloudinary.config({
   
+ cloud_name:"dclwk6yun",
+    api_key:"147852622976198",
+    api_secret:"_6p-YxOrkD69rHxRbtxjw83IqIU"
+
 
 
     // cloud_name:process.env.CLOUDNIARY_CLOUD_NAME,
