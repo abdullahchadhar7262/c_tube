@@ -1,24 +1,50 @@
 import { Router } from "express";
-import {registerUser,loginUser,logoutUser, refreshAccessToken,changeCurrentPassword,updateUserAvatar,updateAccountDetail,updateUsercoverImage} from "../controllers/user.controller.js"
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+  refreshAccessToken,
+  changeCurrentPassword,
+  updateUserAvatar,
+  updateAccountDetail,
+  updateUsercoverImage,
+  getUserChannelProfile,
+  getWatchHistory,
+} from "../controllers/user.controller.js";
 import upload from "../middlewares/mluter.middleware.js";
 import { verifyJwt } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.post("/login",loginUser);
+router.post("/login", loginUser);
 
-const uploadMiddleware = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'coverImage', maxCount: 1 }])
+const uploadMiddleware = upload.fields([
+  { name: "avatar", maxCount: 1 },
+  { name: "coverImage", maxCount: 1 },
+]);
 
-router.post('/register', uploadMiddleware, registerUser )
+router.post("/register", uploadMiddleware, registerUser);
 
-router.post('/logout', verifyJwt,logoutUser)
+router.post("/logout", verifyJwt, logoutUser);
 
-router.post("/refreshToken",refreshAccessToken)
+router.post("/refreshToken", refreshAccessToken);
 
-router.post("/reset_password",verifyJwt,changeCurrentPassword)
-router.post("/updateAccountDetail",verifyJwt,updateAccountDetail)
-router.post("/updateuserAvatar",verifyJwt,upload.single('avatar'),updateUserAvatar)
-router.post("/updateuserCoverImage",verifyJwt,upload.single('coverImage'),updateUsercoverImage)
+router.post("/reset_password", verifyJwt, changeCurrentPassword);
+router.post("/updateAccountDetail", verifyJwt, updateAccountDetail);
+router.patch(
+  "/updateuserAvatar",
+  verifyJwt,
+  upload.single("avatar"),
+  updateUserAvatar
+);
+router.patch(
+  "/updateuserCoverImage",
+  verifyJwt,
+  upload.single("coverImage"),
+  updateUsercoverImage
+);
+router.post("/channel/:username", verifyJwt, getUserChannelProfile);
+router.post("/watchHistory", verifyJwt, getWatchHistory);
 
 // router.route("/register").post(
 

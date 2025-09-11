@@ -16,7 +16,9 @@ app.use(express.urlencoded({extended:true}));
 
 //routes
 import userRouter from "./routes/user.routes.js"
+import uploadVideo from "./routes/videos.routes.js"
 
 app.use("/api/v1/users",userRouter)
+app.use("/api/v1/videos",uploadVideo)
 
 export default app;
