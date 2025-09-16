@@ -19,6 +19,7 @@ import userRouter from "./routes/user.routes.js"
 import uploadVideo from "./routes/videos.routes.js"
 
 app.use("/api/v1/users",userRouter)
-app.use("/api/v1/videos",uploadVideo)
+app.use("/api/v2/videos",uploadVideo)
+
 
 export default app;

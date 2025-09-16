@@ -11,6 +11,10 @@ const videoSchema = new mongoose.Schema(
       type: String, //cloudinary url
       required: true,
     },
+    videoUrl:{
+      type:String,
+       require:true
+    },
     title: {
       type: String,
       required: true,
@@ -20,14 +24,14 @@ const videoSchema = new mongoose.Schema(
       required: true,
     },
     duration: {
-      type: number,
+      type: Number,
       required: true,
     },
         views: {
-      type: number,
+      type: Number,
      default:0
     },
-            views: {
+      ispublished: {
       type: Boolean,
         default:true
     },
