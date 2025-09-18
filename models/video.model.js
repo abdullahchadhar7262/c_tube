@@ -35,6 +35,9 @@ const videoSchema = new mongoose.Schema(
       type: Boolean,
         default:true
     },
+    hlsUrl:{
+      type:String
+    },
     owner:{
         type:Schema.Types.ObjectId,
         ref:"User"

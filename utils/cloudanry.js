@@ -16,19 +16,30 @@ import { fileURLToPath } from 'url';
     // api_secret:process.env.CLOUDNIARY_API_SECRET
   })
 
-const uploadOnCloudnary   = async(LocalFilePath)=>{
+const uploadOnCloudnary = async (LocalFilePath, resourceType) => {
   try {
+    if (!LocalFilePath) return null;
 
-    console.log("this is cloudinary",LocalFilePath)
-    if(!LocalFilePath) return null
-      const response = await cloudinary.uploader.upload(LocalFilePath,{resource_type:"auto"})
-      console.log("your file is uploaded sucessfully",response)
-      return response
+    // Prepare options object
+    let options = {
+      resource_type: resourceType,
+    };
+
+    // Only add eager streaming options for videos
+    if (resourceType === "video") {
+      options.eager = [{ streaming_profile: "full_hd", format: "m3u8" }];
+      options.eager_async = true;
+    }
+
+    const response = await cloudinary.uploader.upload(LocalFilePath, options);
+    console.log("Upload response:", response);
+    return response;
   } catch (error) {
-    fs.unlinkSync(LocalFilePath) // removes locally saved temporary file as the opertaion got temparorily failed
-    return null
+    fs.unlinkSync(LocalFilePath);
+    console.error("Upload failed:", error);
+    return null;
   }
-        
-}
+};
+
 
 export default uploadOnCloudnary

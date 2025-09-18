@@ -15,11 +15,12 @@ export const uploadVideo = asyncHandler(async (req, res) => {
     throw new apiError(400, "At least one video file is required");
   }
 
-  const thumbnail = await uploadOnCloudinary(req.files.thumbnail[0].path);
-  const coverImage = await uploadOnCloudinary(req.files.coverImage[0].path);
-  const videoUpload = await uploadOnCloudinary(req.files.video[0].path);
+  const thumbnail = await uploadOnCloudinary(req.files.thumbnail[0].path,"image");
+  const coverImage = await uploadOnCloudinary(req.files.coverImage[0].path,"image");
+  const videoUpload = await uploadOnCloudinary(req.files.video[0].path,"video");
   console.log(videoUpload)
-
+const hlsUrl = videoUpload.eager && videoUpload.eager.length > 0 ? videoUpload.eager[0].url : null;
+console.log("HLS URL:", hlsUrl);
   const video = await Video.create({
     title,
     description,
@@ -28,6 +29,7 @@ export const uploadVideo = asyncHandler(async (req, res) => {
     coverImage: coverImage.secure_url,
     owner: req.user._id,
     videoUrl: videoUpload.secure_url,
+    hlsUrl:hlsUrl
   });
            
   res.status(201).json({
